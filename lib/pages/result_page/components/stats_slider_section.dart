@@ -42,9 +42,9 @@ class StatsSliderSection extends StatelessWidget {
           children: [
             _buildSliderRow('전공', '교양', 0.4, Colors.blue, Colors.red),
             const SizedBox(height: 10),
-            _buildSliderRow('공부', '휴식', 0.7, Colors.green, Colors.orange),
+            _buildSliderRow('공부', '휴식', 0.7, Colors.blue, Colors.red),
             const SizedBox(height: 10),
-            _buildSliderRow('활동', '비활동', 0.5, Colors.purple, Colors.yellow),
+            _buildSliderRow('활동', '비활동', 0.5, Colors.blue, Colors.red),
           ],
         ),
       ),
