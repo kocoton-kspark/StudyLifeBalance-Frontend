@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'index.dart'; // 👈 1. index.dart 파일을 import 해주세요. (경로는 실제 위치에 맞게 수정)
+import 'package:get/get.dart';
+import 'index.dart';
 
 class RecommendationPage extends StatelessWidget {
   const RecommendationPage({super.key});
@@ -9,10 +10,14 @@ class RecommendationPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text('추천 스라밸'),
+        title: const Text(
+            '추천 스라밸',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 1,
+        surfaceTintColor: Colors.transparent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -41,14 +46,7 @@ class RecommendationPage extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // 👇 2. 이 부분을 수정했습니다.
-                // 기존의 Navigator.pop(context); 대신 아래 코드를 사용합니다.
-                // 모든 이전 화면을 제거하고 IndexPage로 이동합니다.
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const IndexPage()),
-                      (Route<dynamic> route) => false,
-                );
+                Get.offAll(() => IndexPage());
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 55),

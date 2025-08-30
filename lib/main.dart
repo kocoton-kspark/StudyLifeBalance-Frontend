@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:media_store_plus/media_store_plus.dart';
 
+import 'index.dart';
 import 'init_controllers.dart';
 import 'pages/input_form_page.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
   initControllers();
+  WidgetsFlutterBinding.ensureInitialized();
+  await MediaStore.ensureInitialized();
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const InputFormPage(),
+      home: const IndexPage(),
     );
   }
 }

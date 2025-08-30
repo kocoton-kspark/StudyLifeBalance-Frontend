@@ -1,21 +1,18 @@
-// lib/main.dart
-
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'dart:html' as html;
-import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:media_store_plus/media_store_plus.dart';
 
+import '../../des.dart';
 import 'components/recommendation_button.dart';
 import 'components/result_card.dart';
 import 'components/social_share_bar.dart';
-
-// 분리된 위젯들을 import 합니다.
-
-// des.dart와 RecommendationPage는 예시로 남겨둡니다.
-// import 'des.dart';
-// class RecommendationPage extends StatelessWidget { ... }
 
 class ResultPage extends StatefulWidget {
   const ResultPage({super.key});
@@ -27,36 +24,53 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   final GlobalKey _captureKey = GlobalKey();
 
-  // 이미지 다운로드 기능은 상태를 관리하는 이곳에 그대로 둡니다.
-  Future<void> _captureAndDownloadImage() async {
+  Future<void> _captureAndSaveToGallery() async {
     try {
-      RenderRepaintBoundary boundary =
-      _captureKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      Uint8List pngBytes = byteData!.buffer.asUint8List();
+      // 1) 위젯 캡처
+      final boundary = _captureKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      final pngBytes = byteData!.buffer.asUint8List();
 
-      final base64 = base64Encode(pngBytes);
-      html.AnchorElement(href: 'data:application/octet-stream;base64,$base64')
-        ..setAttribute("download", "slabel_result.png")
-        ..click();
+      // 2) 임시 파일 저장
+      final dir = await getTemporaryDirectory();
+      final filePath = '${dir.path}/slabel_result_${DateTime.now().millisecondsSinceEpoch}.png';
+      final file = File(filePath);
+      await file.writeAsBytes(pngBytes);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('이미지 다운로드를 시작합니다.')),
-      );
+      // 3) MediaStore를 통해 갤러리에 저장 (Android 전용)
+      if (Platform.isAndroid) {
+        final mediaStore = MediaStore();
+        final savedEntry = await mediaStore.saveFile(
+          tempFilePath: file.path,              // ✅ 최신 API: tempFilePath 사용
+          dirType: DirType.photo,               // 사진 카테고리
+          dirName: DirName.pictures,              // ✅ DirName 타입으로 전달
+        );
+
+        if (savedEntry != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('갤러리에 저장되었습니다. (앨범: SLB)')),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('저장에 실패했습니다.')),
+          );
+        }
+      } else if (Platform.isIOS) {
+        // iOS는 MediaStore가 없으므로, 필요 시 photo_manager 등으로 별도 구현
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('현재 iOS 저장은 미구현 상태입니다.')),
+        );
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('오류 발생: ${e.toString()}')),
+        SnackBar(content: Text('오류 발생: $e')),
       );
     }
   }
 
   void _navigateToRecommendation() {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => const RecommendationPage()),
-    // );
-    print("추천 페이지로 이동");
+    Get.to(() => RecommendationPage());
   }
 
   @override
@@ -64,10 +78,15 @@ class _ResultPageState extends State<ResultPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9F9),
       appBar: AppBar(
-        title: const Text('실행 결과'),
+        title: const Text(
+            '실행 결과',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 1,
+        surfaceTintColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -84,7 +103,7 @@ class _ResultPageState extends State<ResultPage> {
               const SizedBox(height: 30),
               // 2. 소셜 공유 바 위젯
               SocialShareBar(
-                onDownload: _captureAndDownloadImage,
+                onDownload: _captureAndSaveToGallery,
                 onInstagram: () => print('인스타그램 공유'),
                 onKakao: () => print('카카오 공유'),
               ),

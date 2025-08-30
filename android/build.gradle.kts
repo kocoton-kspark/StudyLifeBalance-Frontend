@@ -22,3 +22,13 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+
+// ---- Force task-level Kotlin JVM 1.8 for all subprojects (align with plugins using Java 1.8) ----
+subprojects {
+    // Only adjust Kotlin JVM target; keep Java settings as configured by each module/AGP
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+}
