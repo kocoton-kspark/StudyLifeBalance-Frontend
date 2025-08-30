@@ -70,7 +70,34 @@ class ResultCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            // 통계 슬라이더 섹션을 별도 위젯으로 분리
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 0, 15),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  const Text(
+                      '당신의 MBTI 중, ',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                      '4%',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                      ' 가 동일한 스라벨 유형을 가지고 있어요!',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  )
+                ],
+              ),
+            ),
             const StatsSliderSection(),
             const SizedBox(height: 20),
           ],

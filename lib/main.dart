@@ -10,6 +10,7 @@ void main() async {
   initControllers();
   WidgetsFlutterBinding.ensureInitialized();
   await MediaStore.ensureInitialized();
+  MediaStore.appFolder = 'SLB';
 
   runApp(const MyApp());
 }
