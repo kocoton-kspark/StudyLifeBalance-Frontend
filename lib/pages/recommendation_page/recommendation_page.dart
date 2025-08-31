@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:slb/pages/result_page/components/sleep_slider_section.dart';
-import 'package:slb/pages/result_page/components/stats_slider_section.dart';
-import 'index.dart';
+
+import '../../controllers/input_form_page_controller.dart';
+import '../home_page/home_page.dart';
+import 'components/sleep_slider_section.dart';
+
 
 class RecommendationPage extends StatelessWidget {
   const RecommendationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<InputFormPageController>();
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -26,21 +29,21 @@ class RecommendationPage extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: ListView(
+              child: Obx(() => ListView(
                 children: [
                   _buildInfoCard(
                     title: '유형 자세히 설명',
-                    description: '설명설명설명',
+                    description: controller.description.value,
                   ),
                   const SizedBox(height: 16),
                   _buildInfoCard(
                     title: '공부를 더 잘하는 법?',
-                    description: '지피티 설명',
+                    description: controller.studyRecommend.value,
                   ),
                   const SizedBox(height: 16),
                   _buildInfoCard(
                     title: '더 잘 쉬는 법?',
-                    description: '지피티 설명',
+                    description: controller.restRecommend.value,
                   ),
                   const SizedBox(height: 16),
                   // '더 잘 쉬는 법?' 카드 안에 SleepSliderSection을 포함시킵니다.
@@ -50,16 +53,17 @@ class RecommendationPage extends StatelessWidget {
                     additionalContent: const SleepSliderSection(),
                   ),
                 ],
-              ),
+              )),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Get.offAll(() => IndexPage());
+                controller.resetState();
+                Get.offAll(() => HomePage());
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 55),
-                backgroundColor: Colors.blue.shade600,
+                backgroundColor: Color(0xFF226BEF),
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),

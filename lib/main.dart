@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:media_store_plus/media_store_plus.dart';
 
-import 'index.dart';
 import 'init_controllers.dart';
-import 'pages/input_form_page.dart';
+import 'pages/home_page/home_page.dart';
 
 void main() async {
   initControllers();
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const IndexPage(),
+      home: const HomePage(),
     );
   }
 }

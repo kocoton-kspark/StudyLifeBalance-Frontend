@@ -22,9 +22,8 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   Future<void> _navigateAfterDelay() async {
-    // controller.postTours();
-    // controller.resetState();
-    await Future.delayed(const Duration(seconds: 1));
+    controller.fetchAllInformation();
+    await Future.delayed(const Duration(seconds: 3));
     Get.off(() => ResultPage());
   }
 

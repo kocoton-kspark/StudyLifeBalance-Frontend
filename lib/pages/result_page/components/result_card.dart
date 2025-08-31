@@ -1,6 +1,8 @@
 // lib/components/result_card.dart
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:slb/controllers/input_form_page_controller.dart';
 import 'stats_slider_section.dart';
 
 class ResultCard extends StatelessWidget {
@@ -17,6 +19,7 @@ class ResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<InputFormPageController>();
     return RepaintBoundary(
       key: captureKey,
       child: Container(
@@ -71,30 +74,59 @@ class ResultCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 0, 0, 15),
-              child: Row(
+              padding: const EdgeInsets.fromLTRB(15, 0, 0, 10),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
                 children: [
-                  const Text(
-                      '당신의 MBTI 중, ',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                          '당신의 스라벨 유형은 ',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                          controller.code.value,
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        ' 입니다.',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      )
+                    ],
                   ),
-                  Text(
-                      '4%',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      const Text(
+                          '당신의 MBTI 중, ',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        "${controller.mbtiPercentage.value.toString()}%",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                          ' 가 동일한 스라벨 유형을 가지고 있어요!',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      )
+                    ],
                   ),
-                  Text(
-                      ' 가 동일한 스라벨 유형을 가지고 있어요!',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  )
                 ],
               ),
             ),

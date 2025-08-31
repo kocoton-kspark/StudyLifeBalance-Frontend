@@ -1,8 +1,8 @@
-// lib/components/sleep_slider_section.dart
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:slb/controllers/input_form_page_controller.dart';
+import 'package:slb/dummy/sleep_time_per_grade.dart';
 
-// Thumb을 없애기 위한 커스텀 Shape
 class NoThumbSliderShape extends SliderComponentShape {
   const NoThumbSliderShape();
 
@@ -11,7 +11,8 @@ class NoThumbSliderShape extends SliderComponentShape {
 
   @override
   void paint(PaintingContext context, Offset center,
-      {required Animation<double> activationAnimation,
+      {
+        required Animation<double> activationAnimation,
         required Animation<double> enableAnimation,
         required bool isDiscrete,
         required TextPainter labelPainter,
@@ -29,7 +30,9 @@ class SleepSliderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 슬라이더의 최대 시간 값을 설정합니다 (예: 12시간).
+    final controller = Get.find<InputFormPageController>();
+    final double missingSleepHour = controller.sleepTime.value - 8;
+    final bool isMissSleeping = missingSleepHour < 0;
     const double maxSleepHours = 12.0;
 
     return SliderTheme(
@@ -43,15 +46,15 @@ class SleepSliderSection extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: [
-            // 👇 [수정] _buildSliderRow 호출 방식을 변경합니다.
-            // 표시할 텍스트("7.5시간"), 실제 값(7.5), 최대 값(12.0)을 직접 전달합니다.
-            _buildSliderRow('나의 수면 시간', '7.5시간', 7.5, maxSleepHours, Colors.blue, Colors.white38),
+            _buildSliderRow('나의 수면 시간', '${controller.sleepTime.value.round()}시간', controller.sleepTime.value, maxSleepHours, Colors.blue, Color(0xFFF9F9F9)),
             const SizedBox(height: 10),
-            _buildSliderRow('권장 수면 시간', '8시간', 8.0, maxSleepHours, Colors.blue, Colors.white38),
+            _buildSliderRow('권장 수면 시간', '8시간', 8.0, maxSleepHours, Colors.blue, Color(0xFFF9F9F9)),
             const SizedBox(height: 10),
-            _buildSliderRow('부족한 수면 시간', '0.5시간', 0.5, maxSleepHours, Colors.red, Colors.white38),
+            isMissSleeping
+              ? _buildSliderRow('부족한 수면 시간', '${missingSleepHour.round().abs()}시간', missingSleepHour.abs(), maxSleepHours, Colors.red, Color(0xFFF9F9F9))
+              : _buildSliderRow('초과한 수면 시간', '${missingSleepHour.round().abs()}시간', missingSleepHour.abs(), maxSleepHours, Colors.red, Color(0xFFF9F9F9)),
             const SizedBox(height: 10),
-            _buildSliderRow('n학년 평균 수면 시간', '6시간', 6.0, maxSleepHours, Colors.blue, Colors.white38),
+            _buildSliderRow('${controller.gradeSelectedValue.value}학년 평균 수면 시간', '${sleepTimePerGrade[controller.gradeSelectedValue.value]}시간', sleepTimePerGrade[controller.gradeSelectedValue.value]!, maxSleepHours, Colors.blue, Color(0xFFF9F9F9)),
           ],
         ),
       ),

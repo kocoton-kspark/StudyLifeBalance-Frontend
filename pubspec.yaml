@@ -40,6 +40,7 @@ dependencies:
   get: ^4.7.2
   dropdown_button2: ^2.3.9
   group_button: ^5.3.4
+  dio: ^5.4.0
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +64,7 @@ flutter:
     - assets/images/kakao_icon.png
     - assets/images/Save.png
     - assets/images/sejong.png
+    - assets/images/einstein.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

@@ -1,5 +1,3 @@
-// lib/components/recommendation_button.dart
-
 import 'package:flutter/material.dart';
 
 class RecommendationButton extends StatelessWidget {

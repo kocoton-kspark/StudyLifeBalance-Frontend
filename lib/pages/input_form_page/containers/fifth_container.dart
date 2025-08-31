@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/input_form_page_controller.dart';
+import '../../../controllers/input_form_page_controller.dart';
 
-class SeventhContainer extends StatelessWidget {
-  const SeventhContainer({super.key});
+
+class FifthContainer extends StatelessWidget {
+  const FifthContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class SeventhContainer extends StatelessWidget {
               )
             ]
         ),
-        height: 225,
+        height: 250,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -37,7 +38,7 @@ class SeventhContainer extends StatelessWidget {
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
-                        'Q7.',
+                        'Q5.',
                         style: TextStyle(
                           fontSize: 31,
                           fontWeight: FontWeight.w900,
@@ -46,11 +47,22 @@ class SeventhContainer extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0),
                         child: Text(
-                          '공강 없이 달린 지금 당장 가고 싶은 곳은?',
+                          '과제 제출 하루 전 어느곳에서',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500
                           ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        '과제를 마무리할까요?',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500
                         ),
                       ),
                     ],
@@ -60,18 +72,18 @@ class SeventhContainer extends StatelessWidget {
               Obx(() => Column(
                 children: [
                   RadioListTile<String>(
-                      title: Text('폭신 폭신한 침대 속'),
-                      value: '폭신 폭신한 침대 속',
+                      title: Text('조용하고 아늑한 집'),
+                      value: '조용하고 아늑한 집',
                       activeColor: Color(0xFF226BEF),
-                      groupValue: controller.seventhSelectedValue.value,
-                      onChanged: (value) => controller.selectSeventh(value)
+                      groupValue: controller.fifthSelectedValue.value,
+                      onChanged: (value) => controller.selectFifth(value)
                   ),
                   RadioListTile<String>(
-                      title: Text('선선한 바람이 부는 운동장'),
-                      value: '선선한 바람이 부는 운동장',
+                      title: Text('잔잔한 음악이 나오는 카페'),
+                      value: '잔잔한 음악이 나오는 카페',
                       activeColor: Color(0xFF226BEF),
-                      groupValue: controller.seventhSelectedValue.value,
-                      onChanged: (value) => controller.selectSeventh(value)
+                      groupValue: controller.fifthSelectedValue.value,
+                      onChanged: (value) => controller.selectFifth(value)
                   ),
                 ],
               ))
