@@ -1,6 +1,8 @@
 // lib/components/stats_slider_section.dart
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:slb/controllers/input_form_page_controller.dart';
 
 // Thumb을 없애기 위한 커스텀 Shape
 class NoThumbSliderShape extends SliderComponentShape {
@@ -29,6 +31,7 @@ class StatsSliderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<InputFormPageController>();
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         thumbShape: const NoThumbSliderShape(),
@@ -40,11 +43,11 @@ class StatsSliderSection extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: [
-            _buildSliderRow('전공', '교양', 0.4, Colors.blue, Colors.red),
+            _buildSliderRow('전공', '교양', controller.majorRatio.value.toDouble() / 100, Colors.blue, Colors.red),
             const SizedBox(height: 10),
-            _buildSliderRow('공부', '휴식', 0.7, Colors.green, Colors.orange),
+            _buildSliderRow('공부', '휴식', controller.studyRatio.value.toDouble() / 100, Colors.blue, Colors.red),
             const SizedBox(height: 10),
-            _buildSliderRow('활동', '비활동', 0.5, Colors.purple, Colors.yellow),
+            _buildSliderRow('활동', '비활동', controller.outdoorActivityRatio.value.toDouble() / 100, Colors.blue, Colors.red),
           ],
         ),
       ),

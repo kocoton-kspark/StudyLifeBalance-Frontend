@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../loading_page.dart';
+import '../pages/loading_page.dart';
+
 
 class BottomButton extends StatelessWidget {
   const BottomButton({super.key});

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/input_form_page_controller.dart';
+import '../../../controllers/input_form_page_controller.dart';
+
 
 class SixthContainer extends StatelessWidget {
   const SixthContainer({super.key});
@@ -37,7 +38,7 @@ class SixthContainer extends StatelessWidget {
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
-                        'Q5.',
+                        'Q6.',
                         style: TextStyle(
                           fontSize: 31,
                           fontWeight: FontWeight.w900,

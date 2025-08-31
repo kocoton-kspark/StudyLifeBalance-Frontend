@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:slb/pages/input_form_page.dart';
+import 'package:slb/controllers/home_page_controller.dart';
+import 'package:slb/pages/input_form_page/input_form_page.dart';
 
-class IndexPage extends StatelessWidget {
-  const IndexPage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final controller = Get.find<HomePageController>();
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchTodayQuote();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +55,7 @@ class IndexPage extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                  '오늘의 한 마디!',
+                                '오늘의 한 마디!',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w900,
                                   fontSize: 22,
@@ -53,13 +65,18 @@ class IndexPage extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              const Text(
-                                '혹시 열심히 와 잘을 혼동하고 있지는 않나요?\n지금 당신의 스터디와 라이프의 균형을 분석해보세요!',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                              Expanded(
+                                child: Obx(() => Text(
+                                  controller.todayQuote.value,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  softWrap: true,
+                                  maxLines: null,
+                                  overflow: TextOverflow.visible,
+                                )),
+                              )
                             ],
                           ),
                         ],

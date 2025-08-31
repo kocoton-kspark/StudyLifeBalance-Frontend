@@ -1,16 +1,16 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:media_store_plus/media_store_plus.dart';
+import 'package:slb/dummy/match_pictures.dart';
 
-import '../../des.dart';
-import 'components/recommendation_button.dart';
+import '../../controllers/input_form_page_controller.dart';
+import '../recommendation_page/recommendation_page.dart';
+import '../recommendation_page/components/recommendation_button.dart';
 import 'components/result_card.dart';
 import 'components/social_share_bar.dart';
 
@@ -22,6 +22,7 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
+  final controller = Get.find<InputFormPageController>();
   final GlobalKey _captureKey = GlobalKey();
 
   Future<void> _captureAndSaveToGallery() async {
@@ -70,6 +71,7 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   void _navigateToRecommendation() {
+
     Get.to(() => RecommendationPage());
   }
 
@@ -97,8 +99,8 @@ class _ResultPageState extends State<ResultPage> {
               // 1. 결과 카드 위젯
               ResultCard(
                 captureKey: _captureKey,
-                resultType: '궁궐 탈출 세종대왕',
-                imagePath: 'assets/images/sejong.png',
+                resultType: controller.category.value,
+                imagePath: matchPictures[controller.category.value]!,
               ),
               const SizedBox(height: 30),
               // 2. 소셜 공유 바 위젯

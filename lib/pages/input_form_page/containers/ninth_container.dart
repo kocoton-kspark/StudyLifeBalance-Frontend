@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/input_form_page_controller.dart';
+import '../../../controllers/input_form_page_controller.dart';
 
-class FifthContainer extends StatelessWidget {
-  const FifthContainer({super.key});
+
+class NinthContainer extends StatelessWidget {
+  const NinthContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class FifthContainer extends StatelessWidget {
               )
             ]
         ),
-        height: 250,
+        height: 225,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -37,7 +38,7 @@ class FifthContainer extends StatelessWidget {
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
-                        'Q5.',
+                        'Q9.',
                         style: TextStyle(
                           fontSize: 31,
                           fontWeight: FontWeight.w900,
@@ -46,7 +47,7 @@ class FifthContainer extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0),
                         child: Text(
-                          '과제 제출 하루 전 어느곳에서',
+                          '하루의 평균 수면 시간은 얼마나 되나요?',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500
@@ -55,37 +56,48 @@ class FifthContainer extends StatelessWidget {
                       ),
                     ],
                   ),
+                ],
+              ),
+              Column(
+                children: [
                   Row(
                     children: [
                       Text(
-                        '과제를 마무리할까요?',
+                          '평균 수면 시간: ',
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500
+                          fontSize: 16,
                         ),
                       ),
+                      Obx(() => Text(
+                          controller.sleepTime.value.round().toString(),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )),
                     ],
                   ),
+                  Obx((() => SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      activeTrackColor: Color(0xFF226BEF),
+                      inactiveTrackColor: Colors.grey[200],
+                      trackHeight: 6,
+                      thumbColor: Color(0xFF226BEF),
+                      valueIndicatorColor: Color(0xFF226BEF),
+                    ),
+                    child: Slider(
+                      value: controller.sleepTime.value,
+                      min: 0,
+                      max: 24,
+                      divisions: 24,
+                      label: controller.sleepTime.round().toString(),
+                      onChanged: (double value) {
+                        controller.sleepTime.value = value;
+                      },
+                    ),
+                  ))),
                 ],
-              ),
-              Obx(() => Column(
-                children: [
-                  RadioListTile<String>(
-                      title: Text('조용하고 아늑한 집'),
-                      value: '조용하고 아늑한 집',
-                      activeColor: Color(0xFF226BEF),
-                      groupValue: controller.fifthSelectedValue.value,
-                      onChanged: (value) => controller.selectFifth(value)
-                  ),
-                  RadioListTile<String>(
-                      title: Text('잔잔한 음악이 나오는 카페'),
-                      value: '잔잔한 음악이 나오는 카페',
-                      activeColor: Color(0xFF226BEF),
-                      groupValue: controller.fifthSelectedValue.value,
-                      onChanged: (value) => controller.selectFifth(value)
-                  ),
-                ],
-              ))
+              )
             ],
           ),
         ),

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:slb/pages/containers/eighth_container.dart';
-import 'package:slb/pages/containers/seventh_container.dart';
-import 'package:slb/pages/containers/sixth_container.dart';
-import 'package:slb/pages/containers/tenth_container.dart';
 
-import '../controllers/input_form_page_controller.dart';
-import 'components/bottom_button.dart';
-import 'containers/fourth-one_container.dart';
+import '../../components/bottom_button.dart';
+import '../../controllers/input_form_page_controller.dart';
+import 'containers/eighth_container.dart';
+import 'containers/fifth_container.dart';
 import 'containers/first_container.dart';
+import 'containers/fourth-one_container.dart';
 import 'containers/fourth_container.dart';
 import 'containers/ninth_container.dart';
 import 'containers/second_container.dart';
-import 'containers/fifth_container.dart';
+import 'containers/seventh_container.dart';
+import 'containers/sixth_container.dart';
+import 'containers/tenth_container.dart';
 import 'containers/third_container.dart';
 
 class InputFormPage extends StatefulWidget {
